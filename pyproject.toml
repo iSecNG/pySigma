@@ -1,10 +1,11 @@
 [project]
 name = "pySigma"
-version = "1.0.0rc2"
+version = "1.0.0"
 license = "LGPL-2.1-only"
 description = "Sigma rule processing and conversion tools"
 authors = [
   { name = "Thomas Patzke", email = "thomas@patzke.org" },
+  { name = "AIex_3" },
 ]
 readme = "README.md"
 classifiers = [
@@ -19,7 +20,7 @@ classifiers = [
 ]
 
 [project.urls]
-Repository = "https://github.com/SigmaHQ/pySigma"
+Repository = "https://github.com/iSecNG/pySigma"
 
 [tool.poetry]
 packages = [

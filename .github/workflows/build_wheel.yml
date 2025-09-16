@@ -1,0 +1,46 @@
+name: Build and push python wheel
+on:
+  push:
+    branches: ["*"]
+  pull_request:
+      branches: ["*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{github.head_ref}}
+      - name: Install Poetry
+        run: pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.13
+          cache: poetry
+      - name: Install dependencies
+        run: poetry install
+      - name: Lint with black
+        run: poetry run black --check .
+      - name: Run tests
+        run: poetry run pytest
+      - name: Build packages
+        run: poetry build
+      - name: Check if changes are to commit
+        id: verify_diff
+        run: |
+          git add -A
+          git diff HEAD --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
+      - name: Commit and push changes
+        if: steps.verify_diff.outputs.changed == 'true'
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git commit -m "Build and push python wheel [skip ci]"
+          git push -u origin "${{ github.event.pull_request.head.ref }}"
