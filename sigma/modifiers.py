@@ -519,8 +519,6 @@ class CustomSigmaInListModifier(SigmaValueModifier[SigmaString, SigmaString]):
             identifier = (
                 "<iSecNG><is-in-list-modifier>1758064836.781846<is-in-list-modifier><iSecNG>"
             )
-            if self.detection_item.field == identifier:
-                return val
             val = f"{self.detection_item.field} IN " + val + identifier
             self.detection_item.field = identifier
         else:
