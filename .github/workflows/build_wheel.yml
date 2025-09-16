@@ -31,7 +31,7 @@ jobs:
       - name: Run tests
         run: poetry run pytest
       - name: Build packages
-        run: poetry build
+        run: poetry build --format wheel --output wheels
       - name: Check if changes are to commit
         id: verify_diff
         run: |
