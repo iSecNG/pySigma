@@ -510,6 +510,18 @@ class SigmaTimestampYearModifier(SigmaTimestampModifier):
     time_part_unit: ClassVar[TimestampPart] = TimestampPart.YEAR
 
 
+### AIex_3 Custom Sigma Modifier Implementations ###
+class CustomSigmaInListModifier(SigmaValueModifier[SigmaString, SigmaString]):
+    """Custom '<field> IN <LIST>' implementation. Not specified in the standard."""
+
+    def modify(self, val: SigmaString) -> SigmaString:
+        if isinstance(val, SigmaString):
+            val = "IN " + val
+        else:
+            raise Exception("Not Implemented")
+        return val
+
+
 # Mapping from modifier identifier strings to modifier classes
 modifier_mapping: Dict[str, Type[SigmaModifier[Any, Any]]] = {
     "all": SigmaAllModifier,
@@ -542,6 +554,7 @@ modifier_mapping: Dict[str, Type[SigmaModifier[Any, Any]]] = {
     "wide": SigmaWideModifier,
     "windash": SigmaWindowsDashModifier,
     "year": SigmaTimestampYearModifier,
+    "is-in-list": CustomSigmaInListModifier,
 }
 
 # Mapping from modifier class to identifier
