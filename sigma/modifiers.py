@@ -512,7 +512,7 @@ class SigmaTimestampYearModifier(SigmaTimestampModifier):
 
 ### AIex_3 Custom Sigma Modifier Implementations ###
 class CustomSigmaInListModifier(SigmaValueModifier[SigmaString, SigmaString]):
-    """Custom '<field> IN <LIST>' implementation. Is not in Sigma specified."""
+    """Custom '<field> IN <LIST>' implementation. Not specified in the standard."""
 
     def modify(self, val: SigmaString) -> SigmaString:
         if isinstance(val, SigmaString):
