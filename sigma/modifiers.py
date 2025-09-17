@@ -511,16 +511,18 @@ class SigmaTimestampYearModifier(SigmaTimestampModifier):
 
 
 ### AIex_3 Custom Sigma Modifier Implementations ###
+IS_IN_LIST_IDENTIFIER = (
+    "<iSecNG><is-in-list-modifier><TODO>1758064836.781846<TODO><is-in-list-modifier><iSecNG>"
+)
+
+
 class CustomSigmaInListModifier(SigmaValueModifier[SigmaString, SigmaString]):
     """Custom '<field> IN <LIST>' implementation. Not specified in the standard."""
 
     def modify(self, val: SigmaString) -> SigmaString:
         if isinstance(val, SigmaString):
-            identifier = (
-                "<iSecNG><is-in-list-modifier>1758064836.781846<is-in-list-modifier><iSecNG>"
-            )
-            val = f"{self.detection_item.field} IN " + val + identifier
-            self.detection_item.field = identifier
+            val = f"{self.detection_item.field} IN " + val + IS_IN_LIST_IDENTIFIER
+            self.detection_item.field = IS_IN_LIST_IDENTIFIER
         else:
             raise Exception("Not Implemented")
         return val
