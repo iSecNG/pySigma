@@ -515,6 +515,7 @@ IS_IN_LIST_IDENTIFIER = (
     "<iSecNG><is-in-list-modifier><TODO>1758064836.781846<TODO><is-in-list-modifier><iSecNG>"
 )
 
+
 class CustomSigmaInListModifier(SigmaValueModifier[SigmaString, SigmaString]):
     """Custom '<field> IN <LIST>' implementation. Not specified in the standard."""
 
