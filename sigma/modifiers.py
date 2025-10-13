@@ -521,8 +521,7 @@ class CustomSigmaInListModifier(SigmaValueModifier[SigmaString, SigmaString]):
 
     def modify(self, val: SigmaString) -> SigmaString:
         if isinstance(val, SigmaString):
-            val = f"{self.detection_item.field} IN " + val + IS_IN_LIST_IDENTIFIER
-            self.detection_item.field = IS_IN_LIST_IDENTIFIER
+            val = f"{IS_IN_LIST_IDENTIFIER} IN " + val + IS_IN_LIST_IDENTIFIER
         else:
             raise Exception("Not Implemented")
         return val
