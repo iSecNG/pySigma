@@ -152,9 +152,7 @@ class SigmaString(SigmaType):
                 # Backslash handling is now different to the sigma specification referenced here:
                 # https://github.com/SigmaHQ/sigma-specification/blob/main/specification/sigma-rules-specification.md#escape-character
                 # Now backslashes are no longer "swallowed". For example, three backslashes remain three backslashes and do not become two.
-                if (
-                    c in char_mapping
-                ):  # accumulate if character is special
+                if (c in char_mapping):  # accumulate if character is special
                     acc += c
                 else:  # accumulate escaping and current character (this allows to use plain backslashes in values)
                     acc += escape_char + c
