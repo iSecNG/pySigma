@@ -104,7 +104,7 @@ def test_strings_wildcards():
 
 def test_strings_escaping():
     assert SigmaString("escaped\\*\\?\\\\*?").s == [
-        "escaped*?\\",
+        "escaped*?\\\\",
         SpecialChars.WILDCARD_MULTI,
         SpecialChars.WILDCARD_SINGLE,
     ]
@@ -119,7 +119,7 @@ def test_strings_escaping_end():
 
 
 def test_strings_from_str():
-    assert SigmaString.from_str("test*string\\\\") == SigmaString("test\\*string\\\\\\\\")
+    assert SigmaString.from_str("test*string\\\\\\\\") == SigmaString("test\\*string\\\\\\\\")
 
 
 def test_string_placeholders_single():

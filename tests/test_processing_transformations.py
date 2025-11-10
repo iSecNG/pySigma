@@ -1763,8 +1763,8 @@ def test_replace_string_backslashes(dummy_pipeline):
         [
             SigmaDetection(
                 [
-                    SigmaDetectionItem("field1", [], [SigmaString(r"backslash\\test")]),
-                    SigmaDetectionItem("field2", [], [SigmaString(r"backslash\\\\test")]),
+                    SigmaDetectionItem("field1", [], [SigmaString(r"backslash\\\\test")]),
+                    SigmaDetectionItem("field2", [], [SigmaString(r"backslash\\\\\\\\test")]),
                     SigmaDetectionItem("field3", [], [SigmaString(r"plainwildcard\*test")]),
                 ]
             )
