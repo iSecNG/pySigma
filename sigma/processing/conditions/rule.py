@@ -34,14 +34,23 @@ class LogsourceCondition(RuleProcessingCondition):
     service: Optional[str] = field(default=None)
 
     def __post_init__(self) -> None:
-        self.logsource = SigmaLogSource(self.category, self.product, self.service, custom_attributes={"class_uid": self.class_uid})
+        self.logsource = SigmaLogSource(
+            self.category,
+            self.product,
+            self.service,
+            custom_attributes={"class_uid": self.class_uid},
+        )
 
     def match(
         self,
         rule: Union[SigmaRule, SigmaCorrelationRule],
     ) -> bool:
         if isinstance(rule, SigmaRule):
-            res = rule.logsource.category.__str__() == self.logsource.category.__str__() and rule.logsource.product.__str__() == self.logsource.product.__str__() and rule.logsource.service.__str__() == self.logsource.service.__str__()
+            res = (
+                rule.logsource.category.__str__() == self.logsource.category.__str__()
+                and rule.logsource.product.__str__() == self.logsource.product.__str__()
+                and rule.logsource.service.__str__() == self.logsource.service.__str__()
+            )
             res = res and self.match_ocsf(rule=rule)
             return res
         elif isinstance(rule, SigmaCorrelationRule):
