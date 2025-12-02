@@ -28,19 +28,22 @@ class LogsourceCondition(RuleProcessingCondition):
     the condition returns true if any of the associated rules have the required log source fields.
     """
 
+    class_uid: Optional[str] = field(default=None)
     category: Optional[str] = field(default=None)
     product: Optional[str] = field(default=None)
     service: Optional[str] = field(default=None)
 
     def __post_init__(self) -> None:
-        self.logsource = SigmaLogSource(self.category, self.product, self.service)
+        self.logsource = SigmaLogSource(self.category, self.product, self.service, custom_attributes={"class_uid": self.class_uid})
 
     def match(
         self,
         rule: Union[SigmaRule, SigmaCorrelationRule],
     ) -> bool:
         if isinstance(rule, SigmaRule):
-            return rule.logsource in self.logsource
+            res = rule.logsource.category.__str__() == self.logsource.category.__str__() and rule.logsource.product.__str__() == self.logsource.product.__str__() and rule.logsource.service.__str__() == self.logsource.service.__str__()
+            res = res and self.match_ocsf(rule=rule)
+            return res
         elif isinstance(rule, SigmaCorrelationRule):
             # Will only return true if the rules have been resolved in advance
             for ref in rule.rules:
@@ -48,6 +51,15 @@ class LogsourceCondition(RuleProcessingCondition):
                     if self.match(ref.rule):
                         return True
             return False
+
+    def match_ocsf(self, rule: SigmaRule):
+        res = False
+        rule_ocsf = rule.custom_attributes.get("ocsf")
+        if rule_ocsf:
+            res = rule_ocsf["class_uid"].__str__() == self.logsource.custom_attributes["class_uid"]
+        else:
+            res = True
+        return res
 
 
 @dataclass
