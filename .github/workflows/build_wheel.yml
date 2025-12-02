@@ -37,10 +37,9 @@ jobs:
           git diff HEAD --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
       - name: Commit and push changes
         if: steps.verify_diff.outputs.changed == 'true'
-        uses: planetscale/ghcommit-action@v0.2.19
-        with:
-          commit_message: "Build and push python wheel [skip ci]"
-          repo: ${{github.repository}}
-          branch: "${{ github.event.pull_request.head.ref }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git commit -m "Build and push python wheel [skip ci]"
+          git push -u origin "${{ github.event.pull_request.head.ref }}"
+
