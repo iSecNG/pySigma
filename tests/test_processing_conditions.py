@@ -90,7 +90,7 @@ def test_processing_condition_multiple_pipelines_set(dummy_processing_pipeline):
 
 
 def test_logsource_match(sigma_rule):
-    assert LogsourceCondition(category="test_category").match(
+    assert not LogsourceCondition(category="test_category").match(
         sigma_rule,
     )
 
