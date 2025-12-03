@@ -47,9 +47,9 @@ class LogsourceCondition(RuleProcessingCondition):
     ) -> bool:
         if isinstance(rule, SigmaRule):
             res = (
-                rule.logsource.category.__str__() == self.logsource.category.__str__()
-                and rule.logsource.product.__str__() == self.logsource.product.__str__()
-                and rule.logsource.service.__str__() == self.logsource.service.__str__()
+                str(rule.logsource.category) == str(self.logsource.category)
+                and str(rule.logsource.product) == str(self.logsource.product)
+                and str(rule.logsource.service) == str(self.logsource.service)
             )
             res = res and self.match_ocsf(rule=rule)
             return res
@@ -61,11 +61,10 @@ class LogsourceCondition(RuleProcessingCondition):
                         return True
             return False
 
-    def match_ocsf(self, rule: SigmaRule):
-        res = False
+    def match_ocsf(self, rule: SigmaRule) -> bool:
         rule_ocsf = rule.custom_attributes.get("ocsf")
         if rule_ocsf:
-            res = rule_ocsf["class_uid"].__str__() == self.logsource.custom_attributes["class_uid"]
+            res = str(rule_ocsf["class_uid"]) == str(self.logsource.custom_attributes["class_uid"])
         else:
             res = True
         return res
