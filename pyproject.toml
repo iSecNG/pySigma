@@ -39,7 +39,7 @@ types-pyyaml = "^6.0.12.20240917"
 [tool.poetry.group.dev.dependencies]
 black = "^24.1"
 mypy = "^1.16"
-pip = "^25.2"
+pip = "^26.0"
 pre-commit = "^4.2"
 pylint = "^3.3"
 pytest = "^8.4"
