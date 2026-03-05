@@ -63,8 +63,9 @@ class LogsourceCondition(RuleProcessingCondition):
 
     def match_ocsf(self, rule: SigmaRule) -> bool:
         rule_ocsf = rule.custom_attributes.get("ocsf")
-        if rule_ocsf:
-            res = str(rule_ocsf["class_uid"]) == str(self.logsource.custom_attributes["class_uid"])
+        logsource_class_uid = str(self.logsource.custom_attributes["class_uid"])
+        if rule_ocsf and logsource_class_uid != "None":
+            res = str(rule_ocsf["class_uid"]) == logsource_class_uid
         else:
             res = True
         return res
